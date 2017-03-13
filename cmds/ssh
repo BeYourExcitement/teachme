@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+echo "--------> ssh <--------"
+
+# The command's description
+echo -e "\ndescription here\n"
+
+echo "--------------"
+# The command's syntax
+echo "Syntax:"
+
+echo "--------------"
+# The command's usage
+echo "Usage:"
