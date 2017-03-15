@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# Configure teachme command development
+
+# Intention: Within a loop, create an empty template script for every command given as an input, within `pwd`.
+# Logic: For each command, create git branch, create script, modify the mode of script, git add, git commit
+# Input example: "pwd find cat wc"
+
+echo -e "Intention: Within a loop, create an empty template script for every command given as an input, within working directory"
+echo -e "Logic: For each command, create git branch, create script, modify the mode of script, git add, git commit"
+echo "Input example: \"pwd find cat wc\""
+
+
+echo -e "\nInput your commands:"
+read -a commands
+
+# Tests if commands were given
+if [ -z $commands ]; then
+  echo "Error: no input given"
+  exit 1
+fi
+
+echo -e "\n***Are your commands Git commands?***[y/n]"
+read -r answer
+
+# Test and Loop for Git Commands
+if [[ $answer = [yY] ]]; then
+  for item in ${commands[@]}
+  do
+    git checkout -b develop-git-$item
+    echo -e "#!/usr/bin/env bash\n\necho \"--------> git $item <--------\"\n\n# The command's description\necho -e \"\\\ndescription here\\\n\"\n\necho \"--------------\"\n# The command's syntax\necho \"Syntax:\"\n\necho \"--------------\"\n# The command's usage\necho \"Usage:\"" > $item
+    chmod u+x $item
+    git add --all
+    git commit -m "Create template script for git $item"
+    git checkout master
+  done
+  exit 0
+fi
+
+
+# Loop for Bash Commands
+for item in ${commands[@]}
+do
+  git checkout -b develop-$item
+  echo -e "#!/usr/bin/env bash\n\necho \"--------> $item <--------\"\n\n# The command's description\necho -e \"\\\ndescription here\\\n\"\n\necho \"--------------\"\n# The command's syntax\necho \"Syntax:\"\n\necho \"--------------\"\n# The command's usage\necho \"Usage:\"" > $item
+  chmod u+x $item
+  git add --all
+  git commit -m "Create template script for $item"
+  git checkout master
+done
+
+exit 0

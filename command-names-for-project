@@ -1,0 +1,22 @@
+
+--bash commands
+
+pwd cd ls clear more mkdir touch mv rm rmdir man find grep echo exit whoami cp wc tar curl pipe ping alias chmod sudo ssh for variables while
+
+--branches
+
+develop-pwd,develop-cd,develop-ls,develop-clear,develop-more,develop-mkdir,develop-touch,develop-mv,develop-rm,develop-rmdir,develop-man,develop-find,develop-grep,develop-echo,develop-exit,develop-whoami,develop-cp,develop-wc,develop-tar,develop-curl,develop-pipe,develop-ping,develop-alias,develop-chmod,develop-sudo,develop-ssh,develop-for,develop-variables,develop-while
+
+
+--git commands
+
+status init commit pull push add rm branch merge checkout diff log fetch config rebase
+
+--branches
+
+develop-status,develop-init,develop-commit,develop-pull,develop-push,develop-add,develop-rm,develop-branch,develop-merge,develop-checkout,develop-diff,develop-log,develop-fetch,develop-config,develop-rebase
+
+
+ALL BRANCHES
+
+develop-alias,develop-cd,develop-chmod,develop-clear,develop-cp,develop-curl,develop-echo,develop-exit,develop-find,develop-for,develop-git-add,develop-git-branch,develop-git-checkout,develop-git-commit,develop-git-config,develop-git-diff,develop-git-fetch,develop-git-init,develop-git-log,develop-git-merge,develop-git-pull,develop-git-push,develop-git-rebase,develop-git-rm,develop-git-status,develop-grep,develop-ls,develop-man,develop-mkdir,develop-more,develop-mv,develop-ping,develop-pipe,develop-pwd,develop-rm,develop-rmdir,develop-ssh,develop-sudo,develop-tar,develop-touch,develop-variables,develop-wc,develop-while,develop-whoami
