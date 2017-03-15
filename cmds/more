@@ -12,3 +12,6 @@ echo "Syntax:"
 echo "--------------"
 # The command's usage
 echo "Usage:"
+
+
+exit 0
