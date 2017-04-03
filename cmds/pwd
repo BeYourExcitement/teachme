@@ -3,11 +3,14 @@
 echo "--------> pwd <--------"
 
 # The command's description
-echo -e "\ndescription here\n"
+echo -e "\nDescription:\n\tPrint the full filename of the current working directory."
+echo -e "\n\tNOTE: If no options are specified, the -L option is assumed."
 
 echo "--------------"
 # The command's syntax
-echo "Syntax:"
+echo "Syntax: pwd [-L | -P]"
+echo -e "\t-L      Display the logical current working directory.
+\t-P      Display the physical current working directory (all symbolic links resolved)."
 
 echo "--------------"
 # The command's usage
