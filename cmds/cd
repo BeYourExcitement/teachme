@@ -3,11 +3,32 @@
 echo "--------> cd <--------"
 
 # The command's description
-echo -e "\ndescription here\n"
+echo -e "\nDescription:\n\tChange the current directory."
+echo -e "\n\tNOTE: If no operands or options are given, cd will change the current directory to what your \$HOME variable is set to."
 
 echo "--------------"
 # The command's syntax
-echo "Syntax:"
+echo -e "Syntax: cd [ directory ]
+       \tcd [ - ]
+       \tcd {+|-}n
+       \tcd [ [-L | -P]  directory ]"
+echo -e "\n\tdirectory \n\t\tAn absolute or relative pathname of the directory that shall become the new working directory.
+         \tThe interpretation of a relative pathname by cd depends on the −L option and the CDPATH and PWD environment variables.
+         \tIf directory is an empty string, the results are unspecified.
+
+\t− \tWhen a <hyphen> is used as the operand, the current directory changes to the previous working directory and then writes its name.
+
+\t{+|-}n \tcd extracts an entry from the directory stack, and changes to that directory.  An argument of the form '+n' identifies
+        \ta stack entry by counting from the left of the list shown by the 'dirs' command, starting with zero. Use the command 'dirs -v' to see a
+        \ta numbered list of visited directories. An argument  of the form '-n' counts from the right.  If the
+        \tPUSHD_MINUS option is set, the meanings of '+' and '-' in this context are swapped.
+
+\t−L \tHandle the operand dot-dot logically;
+        \tsymbolic link components shall not be resolved before dot-dot components are processed.
+
+\t−P \tHandle the operand dot-dot physically;
+        \tsymbolic link components shall be resolved before dot-dot components are processed."
+
 
 echo "--------------"
 # The command's usage
