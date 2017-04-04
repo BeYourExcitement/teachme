@@ -3,11 +3,13 @@
 echo "--------> clear <--------"
 
 # The command's description
-echo -e "\ndescription here\n"
+echo -e "\nDescription: \n\tClear your screen if it is possible.  It looks in the environment for the terminal type and
+\tthen in the terminfo database to figure out how to clear the screen. Clear ignores any command-line parameters
+\tthat may be present."
 
 echo "--------------"
 # The command's syntax
-echo "Syntax:"
+echo "Syntax: clear"
 
 echo "--------------"
 # The command's usage
