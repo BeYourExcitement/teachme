@@ -3,11 +3,55 @@
 echo "--------> git init <--------"
 
 # The command's description
-echo -e "\ndescription here\n"
+echo -e "\nDescription: \n\tCreates an empty Git repository or reinitialize an existing one. If you provide a directory,
+\tthe command is run inside it. If this directory does not exist, it will be created.
+\n\tSpecifically it will create a '.git' directory with subdirectories for objects, refs/heads, refs/tags, and
+\ttemplate files. An initial HEAD file that references the HEAD of the master branch is also created."
 
 echo "--------------"
 # The command's syntax
-echo "Syntax:"
+echo "Syntax: git init [-q | --quiet] [--bare] [--template=<template_directory>]
+                 [--separate-git-dir <git dir>]
+                 [--shared[=<permissions>]] [directory]"
+echo -e "\n       -q, --quiet
+           Only print error and warning messages; all other output will be suppressed.
+
+       --bare
+           Create a bare repository. If GIT_DIR environment is not set, it is set to the current working directory.
+
+       --template=<template_directory>
+           Specify the directory from which templates will be used. (See the "TEMPLATE DIRECTORY" section below.)
+
+       --separate-git-dir=<git dir>
+           Instead of initializing the repository as a directory to either $GIT_DIR or ./.git/, create a text file there containing the path
+           to the actual repository. This file acts as filesystem-agnostic Git symbolic link to the repository.
+
+           If this is reinitialization, the repository will be moved to the specified path.
+
+       --shared[=(false|true|umask|group|all|world|everybody|0xxx)]
+           Specify that the Git repository is to be shared amongst several users. This allows users belonging to the same group to push into
+           that repository. When specified, the config variable "core.sharedRepository" is set so that files and directories under $GIT_DIR
+           are created with the requested permissions. When not specified, Git will use permissions reported by umask(2).
+
+           The option can have the following values, defaulting to group if no value is given:
+
+           umask (or false)
+               Use permissions reported by umask(2). The default, when --shared is not specified.
+
+           group (or true)
+               Make the repository group-writable, (and g+sx, since the git group may be not the primary group of all users). This is used to
+               loosen the permissions of an otherwise safe umask(2) value. Note that the umask still applies to the other permission bits
+               (e.g. if umask is 0022, using group will not remove read privileges from other (non-group) users). See 0xxx for how to exactly
+               specify the repository permissions.
+
+           all (or world or everybody)
+               Same as group, but make the repository readable by all users.
+
+           0xxx
+               0xxx is an octal number and each file will have mode 0xxx.  0xxx will override users' umask(2) value (and not only loosen
+               permissions as group and all does).  0640 will create a repository which is group-readable, but not group-writable or
+               accessible to others.  0660 will create a repo that is readable and writable to the current user and group, but inaccessible to
+               others."
 
 echo "--------------"
 # The command's usage
