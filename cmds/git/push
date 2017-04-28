@@ -3,11 +3,166 @@
 echo "--------> git push <--------"
 
 # The command's description
-echo -e "\ndescription here\n"
+echo -e "\nDescription: \n\tUpdates remote refs using local refs, while sending objects necessary to complete the given refs.
+\tWhen the command line does not specify where to push with the <repository> argument, the branch.*.remote configuration for
+\tthe current branch is consulted to determine where to push. If the configuration is missing, it defaults to origin.\n"
 
 echo "--------------"
 # The command's syntax
-echo "Syntax:"
+echo "Syntax: git push [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+                  [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
+                  [-u | --set-upstream]
+                  [--[no-]signed|--sign=(true|false|if-asked)]
+                  [--force-with-lease[=<refname>[:<expect>]]]
+                  [--no-verify] [<repository> [<refspec>...]]"
+echo -e "\nOPTIONS
+       <repository>
+           The 'remote' repository that is destination of a push operation. This parameter can be either a URL (see the section GIT URLS
+           below) or the name of a remote (see the section REMOTES below).
+
+       <refspec>...
+           Specify what destination ref to update with what source object. The format of a <refspec> parameter is an optional plus +, followed
+           by the source object <src>, followed by a colon :, followed by the destination ref <dst>.
+
+           The <src> is often the name of the branch you would want to push, but it can be any arbitrary 'SHA-1 expression', such as master~4
+           or HEAD (see gitrevisions(7)).
+
+           The <dst> tells which ref on the remote side is updated with this push. Arbitrary expressions cannot be used here, an actual ref
+           must be named. If git push [<repository>] without any <refspec> argument is set to update some ref at the destination with <src>
+           with remote.<repository>.push configuration variable, :<dst> part can be omitted--such a push will update a ref that <src> normally
+           updates without any <refspec> on the command line. Otherwise, missing :<dst> means to update the same ref as the <src>.
+
+           The object referenced by <src> is used to update the <dst> reference on the remote side. By default this is only allowed if <dst>
+           is not a tag (annotated or lightweight), and then only if it can fast-forward <dst>. By having the optional leading +, you can tell
+           Git to update the <dst> ref even if it is not allowed by default (e.g., it is not a fast-forward.) This does not attempt to merge
+           <src> into <dst>. See EXAMPLES below for details.
+
+           tag <tag> means the same as refs/tags/<tag>:refs/tags/<tag>.
+
+           Pushing an empty <src> allows you to delete the <dst> ref from the remote repository.
+
+           The special refspec : (or +: to allow non-fast-forward updates) directs Git to push 'matching' branches: for every branch that
+           exists on the local side, the remote side is updated if a branch of the same name already exists on the remote side.
+
+       --all
+           Push all branches (i.e. refs under refs/heads/); cannot be used with other <refspec>.
+
+       --prune
+           Remove remote branches that don't have a local counterpart. For example a remote branch tmp will be removed if a local branch with
+           the same name doesn't exist any more. This also respects refspecs, e.g.  git push --prune remote refs/heads/*:refs/tmp/* would make
+           sure that remote refs/tmp/foo will be removed if refs/heads/foo doesn't exist.
+
+       --mirror
+           Instead of naming each ref to push, specifies that all refs under refs/ (which includes but is not limited to refs/heads/,
+           refs/remotes/, and refs/tags/) be mirrored to the remote repository. Newly created local refs will be pushed to the remote end,
+           locally updated refs will be force updated on the remote end, and deleted refs will be removed from the remote end. This is the
+           default if the configuration option remote.<remote>.mirror is set.
+
+       -n, --dry-run
+           Do everything except actually send the updates.
+
+       --porcelain
+           Produce machine-readable output. The output status line for each ref will be tab-separated and sent to stdout instead of stderr.
+           The full symbolic names of the refs will be given.
+
+       --delete
+           All listed refs are deleted from the remote repository. This is the same as prefixing all refs with a colon.
+
+       --tags
+           All refs under refs/tags are pushed, in addition to refspecs explicitly listed on the command line.
+
+       --follow-tags
+           Push all the refs that would be pushed without this option, and also push annotated tags in refs/tags that are missing from the
+           remote but are pointing at commit-ish that are reachable from the refs being pushed. This can also be specified with configuration
+           variable push.followTags. For more information, see push.followTags in git-config(1).
+
+       --[no-]signed, --sign=(true|false|if-asked)
+           GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged. If false
+           or --no-signed, no signing will be attempted. If true or --signed, the push will fail if the server does not support signed pushes.
+           If set to if-asked, sign if and only if the server supports signed pushes. The push will also fail if the actual call to gpg --sign
+           fails. See git-receive-pack(1) for the details on the receiving end.
+
+       --[no-]atomic
+           Use an atomic transaction on the remote side if available. Either all refs are updated, or on error, no refs are updated. If the
+           server does not support atomic pushes the push will fail.
+
+       --receive-pack=<git-receive-pack>, --exec=<git-receive-pack>
+           Path to the git-receive-pack program on the remote end. Sometimes useful when pushing to a remote repository over ssh, and you do
+           not have the program in a directory on the default $PATH.
+
+       --[no-]force-with-lease, --force-with-lease=<refname>, --force-with-lease=<refname>:<expect>
+           Usually, 'git push' refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.
+
+           This option overrides this restriction if the current value of the remote ref is the expected value. 'git push' fails otherwise.
+
+           Imagine that you have to rebase what you have already published. You will have to bypass the 'must fast-forward' rule in order to
+           replace the history you originally published with the rebased history. If somebody else built on top of your original history while
+           you are rebasing, the tip of the branch at the remote may advance with her commit, and blindly pushing with --force will lose her
+           work.
+
+           This option allows you to say that you expect the history you are updating is what you rebased and want to replace. If the remote
+           ref still points at the commit you specified, you can be sure that no other people did anything to the ref. It is like taking a
+           'lease' on the ref without explicitly locking it, and the remote ref is updated only if the 'lease' is still valid.
+
+           --force-with-lease alone, without specifying the details, will protect all remote refs that are going to be updated by requiring
+           their current value to be the same as the remote-tracking branch we have for them.
+
+           --force-with-lease=<refname>, without specifying the expected value, will protect the named ref (alone), if it is going to be
+           updated, by requiring its current value to be the same as the remote-tracking branch we have for it.
+
+           --force-with-lease=<refname>:<expect> will protect the named ref (alone), if it is going to be updated, by requiring its current
+           value to be the same as the specified value <expect> (which is allowed to be different from the remote-tracking branch we have for
+           the refname, or we do not even have to have such a remote-tracking branch when this form is used).
+
+           Note that all forms other than --force-with-lease=<refname>:<expect> that specifies the expected current value of the ref
+           explicitly are still experimental and their semantics may change as we gain experience with this feature.
+
+           '--no-force-with-lease' will cancel all the previous --force-with-lease on the command line.
+
+       -f, --force
+           Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it. Also, when
+           --force-with-lease option is used, the command refuses to update a remote ref whose current value does not match what is expected.
+
+           This flag disables these checks, and can cause the remote repository to lose commits; use it with care.
+
+           Note that --force applies to all the refs that are pushed, hence using it with push.default set to matching or with multiple push
+           destinations configured with remote.*.push may overwrite refs other than the current branch (including local refs that are strictly
+           behind their remote counterpart). To force a push to only one branch, use a + in front of the refspec to push (e.g git push origin
+           +master to force a push to the master branch). See the <refspec>...  section above for details.
+
+       --repo=<repository>
+           This option is equivalent to the <repository> argument. If both are specified, the command-line argument takes precedence.
+
+       -u, --set-upstream
+           For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1)
+           and other commands. For more information, see branch.<name>.merge in git-config(1).
+
+       --[no-]thin
+           These options are passed to git-send-pack(1). A thin transfer significantly reduces the amount of sent data when the sender and
+           receiver share many of the same objects in common. The default is --thin.
+
+       -q, --quiet
+           Suppress all output, including the listing of updated refs, unless an error occurs. Progress is not reported to the standard error
+           stream.
+
+       -v, --verbose
+           Run verbosely.
+
+       --progress
+           Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This
+           flag forces progress status even if the standard error stream is not directed to a terminal.
+
+       --no-recurse-submodules, --recurse-submodules=check|on-demand|no
+           May be used to make sure all submodule commits used by the revisions to be pushed are available on a remote-tracking branch. If
+           check is used Git will verify that all submodule commits that changed in the revisions to be pushed are available on at least one
+           remote of the submodule. If any commits are missing the push will be aborted and exit with non-zero status. If on-demand is used
+           all submodules that changed in the revisions to be pushed will be pushed. If on-demand was not able to push all necessary revisions
+           it will also be aborted and exit with non-zero status. A value of no or using --no-recurse-submodules can be used to override the
+           push.recurseSubmodules configuration variable when no submodule recursion is required.
+
+       --[no-]verify
+           Toggle the pre-push hook (see githooks(5)). The default is --verify, giving the hook a chance to prevent the push. With
+           --no-verify, the hook is bypassed completely."
 
 echo "--------------"
 # The command's usage
