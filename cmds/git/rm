@@ -1,17 +1,45 @@
 #!/usr/bin/env bash
 
+echo
 echo "--------> git rm <--------"
+echo
 
 # The command's description
-echo -e "\ndescription here\n"
+printf "%s\n\t%s\n\n" "Description:" "Remove files from the index, or from the working tree and the index.
+        git rm will not remove a file from just your working directory."
 
-echo "--------------"
 # The command's syntax
-echo "Syntax:"
+printf "%s\t%s\n" "Syntax:" "git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>..."
+printf "\n"
+printf "\t%s\n\n" "-f, --force
+           Override the up-to-date check.
 
-echo "--------------"
+       -n, --dry-run
+           Don't actually remove any file(s). Instead, just show if they exist in the index and would
+           otherwise be removed by the command.
+
+       -r
+           Allow recursive removal when a leading directory name is given.
+
+       --
+           This option can be used to separate command-line options from the list of files, (useful when
+           filenames might be mistaken for command-line options).
+
+       --cached
+           Use this option to unstage and remove paths only from the index. Working tree files, whether
+           modified or not, will be left alone.
+
+       --ignore-unmatch
+           Exit with a zero status even if no files matched.
+
+       -q, --quiet
+           git rm normally outputs one line (in the form of an rm command) for each file removed. This
+           option suppresses that output."
+
 # The command's usage
-echo "Usage:"
-
+printf "%s\n" "Usage:"
+printf "\t%s\n" "~/ ➜ "
+printf "\t%s\n\n" "~/ ➜ "
 
 exit 0
+
