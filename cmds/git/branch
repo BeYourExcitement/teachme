@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 
+echo
 echo "--------> git branch <--------"
+echo
 
 # The command's description
-echo -e "\ndescription here\n"
+printf "%s\n\t%s\n\n" "Description:" ""
 
-echo "--------------"
 # The command's syntax
-echo "Syntax:"
+printf "%s\t%s\n" "Syntax:" ""
+printf "\n"
+printf "\t%s\n\n" ""
 
-echo "--------------"
-# The command's usage
-echo "Usage:"
-
+# The command's usage examples
+printf "%s\n" "Usage:"
+printf "\t%s\n" "~/ ➜ git branch --track a-branch git@github.com/octocat/test.git"
+printf "\t%s\n\n" "~/ ➜ git branch --all"
 
 exit 0
